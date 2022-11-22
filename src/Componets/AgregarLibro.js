@@ -68,7 +68,7 @@ const AgregarLibro = () => {
         <CampoNumero id="txtPaginas">Paginas</CampoNumero>
         <CampoImage id="txtDescripcion">Descripcion</CampoImage>
        
-
+      
 
         <div className='mt-3'>
             <button className='btn btn-primary col-3 m-3' onClick={()=> guardarLibro()} >Guardar</button>
