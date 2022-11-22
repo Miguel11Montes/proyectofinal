@@ -4,6 +4,7 @@ import BtnAgregar from './BtnAgregar';
 
 export const TablaLibros = () => {
     useEffect(() =>{
+        //localStorage.clear();
         if(localStorage.getItem("libros")!=null){
             let libros = JSON.parse(localStorage.getItem("libros"));
                 
@@ -16,14 +17,13 @@ export const TablaLibros = () => {
                 document.querySelector("#col5").innerHTML = encabezados.editorial;
                 document.querySelector("#col6").innerHTML = encabezados.paginas;
                 document.querySelector("#col7").innerHTML = encabezados.descripcion;
-                document.querySelector("#col8").innerHTML = encabezados.portada;
                 
                 const filas = document.querySelector("#filas");
                 let filasHtml = "";
                 libros.forEach(e => {
                     if(e.id != "Id"){
-                        let btnEliminar = `<button class='btn btn-danger'><i className='bi bi-calendar'></i></button>`
-                        filasHtml +=`<tr><td>${e.id}</td><td>${e.titulo}</td><td>${e.fecha}</td><td>${e.categoria}</td><td>${e.editorial}</td><td>${e.paginas}</td><td>${e.descripcion}</td><td>${e.portada}</td><td>${btnEliminar}</td></tr>`
+                        let btnEliminar = `<a class='btn btn-danger' href='/Delete/${e.id}'><i class="bi bi-trash3"></i></a>`
+                        filasHtml +=`<tr><td>${e.id}</td><td>${e.titulo}</td><td>${e.fecha}</td><td>${e.categoria}</td><td>${e.editorial}</td><td>${e.paginas}</td><td>${e.descripcion}</td><td>${btnEliminar}</td></tr>`
                         console.log(e.titulo)
                     }
                 });
@@ -49,8 +49,7 @@ export const TablaLibros = () => {
                     <th id="col5"></th>
                     <th id="col6"></th>
                     <th id="col7"></th>
-                    <th id="col8"></th>
-                    <th id="col9">Acciones</th>
+                    <th id="col8">Acciones</th>
                 </tr>
             </thead>
             <tbody id="filas">

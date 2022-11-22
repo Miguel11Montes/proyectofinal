@@ -1,9 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
+import CampoFecha from './CampoFecha'
+import { CampoImage } from './CampoImage'
+import CampoNumero from './CampoNumero'
 import CampoTexto from './CampoTexto'
 
 const AgregarLibro = () => {
+    const [mensaje, setMensaje] = useState("");
+
     const guardarLibro = () =>{
+        setMensaje("");
         let id = document.querySelector("#txtId").value;
         let titulo = document.querySelector("#txtTitulo").value;
         let fecha = document.querySelector("#txtFecha").value;
@@ -11,18 +17,19 @@ const AgregarLibro = () => {
         let editorial = document.querySelector("#txtEditorial").value;
         let paginas = document.querySelector("#txtPaginas").value;
         let descripcion = document.querySelector("#txtDescripcion").value;
-        let portada = document.querySelector("#txtPortada").value;
+        
 
         console.log(id)
         
-        if(validarLibro(id, titulo, fecha, categoria, editorial, paginas, descripcion, portada)){
+        if(validarLibro(id, titulo, fecha, categoria, editorial, paginas, descripcion)){
+            //localStorage.clear();
             if(localStorage.getItem("libros")!=null){
                 let libros = JSON.parse(localStorage.getItem("libros"))
                 console.log(libros)
                 if(existe(libros, id)){
                     alert("el id ya existe")
                 }else{
-                    let librosAdd = {id:id, titulo:titulo, fecha:fecha, categoria:categoria, editorial:editorial, paginas:paginas, descripcion:descripcion, portada:portada};
+                    let librosAdd = {id:id, titulo:titulo, fecha:fecha, categoria:categoria, editorial:editorial, paginas:paginas, descripcion:descripcion};
                     libros.push(librosAdd);
 
                     let l = JSON.stringify(libros)
@@ -32,6 +39,9 @@ const AgregarLibro = () => {
                     document.querySelector("#btnCancelar").click();
                 }
             }
+        }
+        else{
+            setMensaje("Complete todos los campos");
         }
     } 
 
@@ -44,19 +54,21 @@ const AgregarLibro = () => {
         return encontrado;
     }
 
-  const validarLibro = (id, titulo, fecha, categoria, editorial, paginas, descripcion, portada) =>{
-     return id=="" || titulo=="" || fecha=="" || categoria=="" || editorial=="" || paginas =="" || descripcion=="" || portada=="" ? false : true
+  const validarLibro = (id, titulo, fecha, categoria, editorial, paginas, descripcion) =>{
+     return id=="" || titulo=="" || fecha=="" || categoria=="" || editorial=="" || paginas =="" || descripcion==""  ? false : true
   }
   return (    
     <div className='row'>
+         <div className={mensaje!=""?'alert alert-warning':''}>{mensaje}</div>
         <CampoTexto id="txtId">Id</CampoTexto>
         <CampoTexto id="txtTitulo">Titulo</CampoTexto>
-        <CampoTexto id="txtFecha">Fecha</CampoTexto>
+        <CampoFecha id="txtFecha">Fecha</CampoFecha>
         <CampoTexto id="txtCategoria">Categoria</CampoTexto>
         <CampoTexto id="txtEditorial">Editorial</CampoTexto>
-        <CampoTexto id="txtPaginas">Paginas</CampoTexto>
-        <CampoTexto id="txtDescripcion">Descripcion</CampoTexto>
-        <CampoTexto id="txtPortada">Portada</CampoTexto>
+        <CampoNumero id="txtPaginas">Paginas</CampoNumero>
+        <CampoImage id="txtDescripcion">Descripcion</CampoImage>
+       
+
 
         <div className='mt-3'>
             <button className='btn btn-primary col-3 m-3' onClick={()=> guardarLibro()} >Guardar</button>

@@ -3,10 +3,12 @@ import './App.css'
 import { BrowserRouter, Link, Route, Switch} from 'react-router-dom'
 import {TablaLibros} from "./Componets/TablaLibros"
 import AgregarLibro from './Componets/AgregarLibro'
+import {DeleteLibro} from './Componets/DeleteLibro'
 
 export const App = () => {
 
   useEffect(() =>{
+    //localStorage.clear();
     if(localStorage.getItem("libros") == null){
         let libros = {id:"Id", titulo:"titulo", fecha:"fecha", categoria:"categoria", editorial:"editorial", paginas:"paginas", descripcion:"descripcion", portada:"portada"};
         let lista = [];
@@ -30,6 +32,7 @@ export const App = () => {
                     <Route path="/" exact>Inicio</Route>
                     <Route path="/libros"><TablaLibros/></Route>
                     <Route path="/AgregarLibro"><AgregarLibro/></Route>
+                    <Route path="/Delete/:id" children={<DeleteLibro/>}></Route>
                     <Route path="/juegos">Juegos</Route>
                 </Switch>       
             </BrowserRouter>
