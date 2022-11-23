@@ -3,7 +3,12 @@ import './App.css'
 import { BrowserRouter, Link, Route, Switch} from 'react-router-dom'
 import {TablaLibros} from "./Componets/TablaLibros"
 import AgregarLibro from './Componets/AgregarLibro'
+
+import TablaJuegos from './Componets/TablaJuegos'
+import AgregarJuego from './Componets/AgregarJuego'
+
 import {DeleteLibro} from './Componets/DeleteLibro'
+
 
 export const App = () => {
 
@@ -32,8 +37,13 @@ export const App = () => {
                     <Route path="/" exact>Inicio</Route>
                     <Route path="/libros"><TablaLibros/></Route>
                     <Route path="/AgregarLibro"><AgregarLibro/></Route>
+
+                    <Route path="/juegos"><TablaJuegos/></Route>
+                    <Route path="/AgregarJuego"><AgregarJuego/></Route>
+
                     <Route path="/Delete/:id" children={<DeleteLibro/>}></Route>
                     <Route path="/juegos">Juegos</Route>
+
                 </Switch>       
             </BrowserRouter>
         </div>
