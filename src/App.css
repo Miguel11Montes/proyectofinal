@@ -1,9 +1,87 @@
-body{
-    background-color: rgb(81, 81, 94);
+body {
+  background-color: rgb(81, 81, 94);
 }
 
-p, #principal{
-    color: white;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    
+p,
+#principal {
+  color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
+
+.agregar-juego input {
+  width: 100% !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .agregar-juego input {
+    width: auto !important;
+  }
+}
+
+/* Start of CSS trick for mobile tables */
+@media only screen and (max-width: 768px) {
+  /* Force table to not be like tables anymore */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  /*
+	Label the data
+	*/
+  td:nth-of-type(1):before {
+    content: "Año:";
+    font-weight: bold;
+  }
+  td:nth-of-type(2):before {
+    content: "Titutlo:";
+    font-weight: bold;
+  }
+  td:nth-of-type(3):before {
+    content: "Clasificacion:";
+    font-weight: bold;
+  }
+  td:nth-of-type(4):before {
+    content: "Consola:";
+    font-weight: bold;
+  }
+  td:nth-of-type(5):before {
+    content: "Stock:";
+    font-weight: bold;
+  }
+  td:nth-of-type(6):before {
+    content: "Acciones:";
+    font-weight: bold;
+  }
+}
+/* End of CSS trick for mobile tables */
