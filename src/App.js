@@ -15,7 +15,7 @@ export const App = () => {
   useEffect(() =>{
     //localStorage.clear();
     if(localStorage.getItem("libros") == null){
-        let libros = {id:"Id", titulo:"titulo", fecha:"fecha", categoria:"categoria", editorial:"editorial", paginas:"paginas", descripcion:"descripcion", portada:"portada"};
+        let libros = {id:"Id", titulo:"Título", fecha:"Fecha", categoria:"Categoría", editorial:"Editorial", paginas:"Páginas", descripcion:"Descripción"};
         let lista = [];
         lista.push(libros);
         let l = JSON.stringify(lista);

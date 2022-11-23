@@ -5,7 +5,7 @@ export default function TablaJuegos() {
   return (
     <div className="juegos col-10 col-md-8 col-lg-12 m-auto">
       <Link className="btn btn-primary my-3" to="/AgregarJuego">
-        Agregar juego
+      <i className="bi bi-plus-square-fill"> </i> Agregar juego
       </Link>
       <Tabla />
     </div>
