@@ -17,21 +17,29 @@ export default function AgregarJuego() {
     if (!e.target.checkValidity()) {
       e.stopPropagation();
     } else {
+      const list = JSON.parse(localStorage.getItem("juegos"));
+
+      if (list) {
+        const newData = {
+          uuid: uuidv4(),
+          year: data.year,
+          title: data.title,
+          rating: data.rating,
+          console: data.console,
+          stock: data.stock,
+        };
+
+        list.push(newData);
+
+        localStorage.setItem("juegos", JSON.stringify(list));
+      } else {
+        localStorage.setItem("juegos", JSON.stringify([data]));
+      }
+
       history.push("/juegos");
     }
 
     e.target.classList.add("was-validated");
-    const list = JSON.parse(localStorage.getItem("juegos"));
-    const newData = {
-      uuid: uuidv4(),
-      year: data.year,
-      title: data.title,
-      rating: data.rating,
-      console: data.console,
-      stock: data.stock,
-    };
-    list.push(newData);
-    localStorage.setItem("juegos", JSON.stringify(list));
   };
 
   const handleChange = (e) => {
@@ -95,7 +103,7 @@ function FormRow({ label, type, name, placeholder, min, handler }) {
         min={min}
         required
       />
-      <div className="invalid-feedback text-end">Por favor ingrese el año</div>
+      <div className="invalid-feedback text-end">Por favor complete este campo</div>
     </div>
   );
 }
