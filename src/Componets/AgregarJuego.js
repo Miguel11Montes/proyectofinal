@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 export default function AgregarJuego() {
   const [data, setData] = useState({});
-  const history = useHistory();
+  const [status, setStatus] = useState({ alert: null, message: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,26 +19,34 @@ export default function AgregarJuego() {
       const list = JSON.parse(localStorage.getItem("juegos"));
 
       if (list) {
-        const newData = {
-          uuid: uuidv4(),
-          year: data.year,
-          title: data.title,
-          rating: data.rating,
-          console: data.console,
-          stock: data.stock,
-        };
-
-        list.push(newData);
-
-        localStorage.setItem("juegos", JSON.stringify(list));
+        if (list.some((game) => game.code === data.code)) {
+          setStatus({ alert: true, message: "El juego ya esta registrado" });
+        } else {
+          const newData = {
+            uuid: uuidv4(),
+            stock: data.stock,
+            code: data.code,
+            title: data.title,
+            platform: data.platform,
+            rating: data.rating,
+            year: data.year,
+          };
+          list.push(newData);
+          localStorage.setItem("juegos", JSON.stringify(list));
+          setStatus({ alert: true, message: "Juego agregado correctamente" });
+        }
       } else {
         localStorage.setItem("juegos", JSON.stringify([data]));
+        setStatus({ alert: true, message: "Juego agregado correctamente" });
       }
-
-      history.push("/juegos");
     }
 
     e.target.classList.add("was-validated");
+  };
+
+  const handleReset = (e) => {
+    e.target.classList.remove("was-validated");
+    setStatus({ alert: false, message: "" });
   };
 
   const handleChange = (e) => {
@@ -53,14 +60,15 @@ export default function AgregarJuego() {
   };
 
   return (
-    <div className="agregar-juego col-10 col-lg-5 mx-auto my-5">
+    <div className="agregar-juego col-10 col-lg-5 mx-auto mt-4 mb-5">
+      {status.alert && <div className="alert alert-warning mb-5">{status.message}</div>}
       <form
         className="formulario needs-validation d-flex flex-column gap-5 text-start"
         onSubmit={handleSubmit}
-        onReset={(e) => e.target.classList.remove("was-validated")}
+        onReset={handleReset}
         noValidate
       >
-        <FormRow label={"Año"} type={"number"} name={"year"} placeholder={"2022"} min={"1958"} handler={handleChange} />
+        <FormRow label={"Codigo"} type={"text"} name={"code"} placeholder={"012345"} handler={handleChange} />
         <FormRow
           label={"Titulo"}
           type={"text"}
@@ -68,14 +76,15 @@ export default function AgregarJuego() {
           placeholder={"God Of War: Ragnarok"}
           handler={handleChange}
         />
-        <FormRow label={"Clasificacion"} type={"text"} name={"rating"} placeholder={"ESRB M"} handler={handleChange} />
         <FormRow
-          label={"Consola"}
+          label={"Plataforma"}
           type={"text"}
-          name={"console"}
+          name={"platform"}
           placeholder={"PlayStation / Nintendo"}
           handler={handleChange}
         />
+        <FormRow label={"Clasificacion"} type={"text"} name={"rating"} placeholder={"ESRB M"} handler={handleChange} />
+        <FormRow label={"Año"} type={"number"} name={"year"} placeholder={"2022"} min={"1958"} handler={handleChange} />
         <FormRow label={"Stock"} type={"number"} name={"stock"} placeholder={"1"} min={"1"} handler={handleChange} />
         <div className="input-group w-100">
           <button type="submit" className="btn btn-primary rounded me-4">
@@ -103,7 +112,7 @@ function FormRow({ label, type, name, placeholder, min, handler }) {
         min={min}
         required
       />
-      <div className="invalid-feedback text-end">Por favor complete este campo</div>
+      <div className="invalid-feedback text-end text-dark fst-italic">Por favor complete este campo</div>
     </div>
   );
 }
