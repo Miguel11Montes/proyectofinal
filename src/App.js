@@ -23,18 +23,17 @@ export const App = () => {
     }
   }, []) 
   return (
-    <div>
-        <p id='principal' className='h1 text-center mt-5'>Bienvenidos al sistema de registro de productos de tiendas</p>
-
+    <div className='proyecto'>
         <div className='container text-center'>
             <BrowserRouter>
-                <div className="form-group">
-                    <Link className='btn btn-dark text-center mt-4 m-3' to="/">Inicio</Link>
+                <div id='principal' className='h1 text-center mt-5 col-10 col-md-8 col-lg-6 mx-auto'>Bienvenidos al sistema de registro de productos de tiendas</div>
+                
+                <div className="rutas my-3">
                     <Link className='btn btn-dark text-center mt-4 m-3' to="/libros">Tienda Libros</Link>
                     <Link className='btn btn-dark text-center mt-4 m-3' to="/juegos">Tienda video juegos</Link>
                 </div>
+
                 <Switch>
-                    <Route path="/" exact>Inicio</Route>
                     <Route path="/libros"><TablaLibros/></Route>
                     <Route path="/AgregarLibro"><AgregarLibro/></Route>
 
